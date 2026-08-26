@@ -1,1 +1,2 @@
-To make, check depends with "ninja deps" and build with "ninja
+Plushie is a simple scaling shader written in glsl.
+
