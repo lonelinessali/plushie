@@ -1,2 +1,22 @@
-Plushie is a simple scaling shader written in glsl.
+Plushie is a lightweight upscaler shader written in GLSL.
+==========
 
+Build
+-----
+
+Check dependences with "ninja deps".
+Build with "ninja".
+
+Usage
+-----
+
+Pass these uniforms:
+    
+    uTex   ->  input texture
+    uTexSize  ->  original size (vec2)
+    uOutSize  ->  target size (vec2)
+    
+Optional thresholds (0 = use built-in defaults):
+    
+    uThreshGradLow, uThreshGradHigh, uThreshVarLow, uThreshVarHigh
+    

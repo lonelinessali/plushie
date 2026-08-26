@@ -1,0 +1,27 @@
+ninja_required_version = 1.10
+
+out = out
+
+rule synth_frag
+  command = mkdir -p $out && printf '#version 300 es\nprecision highp float;\n\nuniform sampler2D uTex;\nuniform vec2 uTexSize;\nuniform vec2 uOutSize;\n\nin vec2 vUV;\nout vec4 fragColor;\n\n' > $out/plushie.frag && cat common.glsl size.glsl analyze.glsl kernels.glsl >> $out/plushie.frag && sed -n '/vec3 sampleWeights/,$$p' main.frag >> $out/plushie.frag && grep -v '#include' $out/plushie.frag > $out/plushie.frag.tmp && mv $out/plushie.frag.tmp $out/plushie.frag && echo "synth frag ok" >> $out/build.log
+  description = build frag
+
+rule synth_vert
+  command = mkdir -p $out && cp main.vert $out/plushie.vert && echo "synth vert ok" >> $out/build.log
+  description = build vert
+
+rule clean
+  command = rm -rf $out
+  description = clean
+
+rule deps
+  command = mkdir -p $out && missing=""; command -v sed >/dev/null || missing="$$missing sed"; command -v grep >/dev/null || missing="$$missing grep"; if [ -n "$$missing" ]; then echo "host missing:$$missing" | tee -a $out/build.log; exit 1; else echo "deps ok" | tee -a $out/build.log; fi
+  description = deps
+
+build $out/plushie.frag: synth_frag
+build $out/plushie.vert: synth_vert
+
+build clean: clean
+build deps: deps
+
+default $out/plushie.frag $out/plushie.vert
