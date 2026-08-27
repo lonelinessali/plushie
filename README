@@ -20,3 +20,14 @@ Optional thresholds (0 = use built-in defaults):
     
     uThreshGradLow, uThreshGradHigh, uThreshVarLow, uThreshVarHigh
     
+Getting started
+---------------
+
+Use example script to scaling image:
+
+    cd example
+    python -m venv .venv
+    source .venv/bin/activate # For Unix/Linux/macOS
+    .venv\bin\Activate.ps1 # For Windows
+    # python -m pip install -r requirements.txt
+    python ./scaling.py -o scalied.jpg --shader-dir .. /path/to/your/image.jpg
